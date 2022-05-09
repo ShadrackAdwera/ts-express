@@ -4,7 +4,7 @@ import cookieSession from 'cookie-session';
 import { loginRoutes } from './routes/login-routes';
 
 import { router as controllerRouter } from './controllers/decorators/controller';
-import './controllers/oop-controllers';
+import './controllers/oop-login-controller';
 
 const app = express();
 
