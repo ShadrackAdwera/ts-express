@@ -15,9 +15,8 @@ app.use(
     keys: ['cookie'],
   })
 );
+//app.use('', loginRoutes);
 app.use(controllerRouter);
-
-app.use('', loginRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   return next(new HttpError('Method / Route does not exist!', 404));
