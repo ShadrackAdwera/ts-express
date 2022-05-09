@@ -3,6 +3,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import cookieSession from 'cookie-session';
 import { loginRoutes } from './routes/login-routes';
 
+import { router as controllerRouter } from './controllers/decorators/controller';
+import './controllers/oop-controllers';
+
 const app = express();
 
 app.use(express.json());
@@ -12,6 +15,7 @@ app.use(
     keys: ['cookie'],
   })
 );
+app.use(controllerRouter);
 
 app.use('', loginRoutes);
 
