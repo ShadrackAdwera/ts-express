@@ -7,23 +7,18 @@ import { controller } from './decorators/controller';
 class LoginController {
   @get('/login')
   getLogin(req: Request, res: Response, next: NextFunction): void {
-    if (req.session && req.session.isLoggedIn) {
-      res.send(`
-      <div>
-      <h2>You are logged in</h2>
-      <br />
-      <a href='/logout'>Log Out</a>
-      <a href='/protected-route'>View Protected Resource</a>
-      </div>
-      `);
-    } else {
-      res.send(`
-      <div>
-      <h2>You are not logged in</h2>
-      <br />
-      <a href='/login'>Log In</a>
-      </div>
-      `);
-    }
+    res.send(`
+    <form method='POST'>
+    <div>
+    <label name='email'>Email</label>
+    <input name='email' type='email'/>
+    </div>
+    <div>
+    <label name='password'>Password</label>
+    <input name='password' type='password'/>
+    </div>
+    <button type='submit'>Submit</button>
+    </form>
+    `);
   }
 }
