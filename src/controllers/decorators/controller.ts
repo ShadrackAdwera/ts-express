@@ -20,8 +20,12 @@ export function controller(prefix: string) {
         key
       ) as HttpMethods;
 
+      const middlewares =
+        Reflect.getMetadata(MetaDataKeys.Middleware, target.prototype, key) ||
+        [];
+
       if (path) {
-        router[method](`${prefix}${path}`, routeHandler);
+        router[method](`${prefix}${path}`, ...middlewares, routeHandler);
       }
     }
   };
