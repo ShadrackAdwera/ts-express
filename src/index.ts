@@ -1,9 +1,9 @@
 import { HttpError } from '@adwesh/common';
 import express, { Request, Response, NextFunction } from 'express';
 import cookieSession from 'cookie-session';
-import { loginRoutes } from './routes/login-routes';
+//import { loginRoutes } from './routes/login-routes';
 
-import { router as controllerRouter } from './controllers/decorators/controller';
+import { AppRouter } from './AppRouter';
 import './controllers/oop-login-controller';
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(
   })
 );
 //app.use('', loginRoutes);
-app.use(controllerRouter);
+app.use(AppRouter.getInstance());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   return next(new HttpError('Method / Route does not exist!', 404));
