@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-type HttpMethods = 'get' | 'post' | 'put' | 'patch' | 'delete';
+export type HttpMethods = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 function routeBinder(method: HttpMethods) {
   return function (path: string) {
