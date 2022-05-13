@@ -2,6 +2,23 @@ import 'reflect-metadata';
 import { AppRouter } from '../../AppRouter';
 import { HttpMethods } from './routes';
 import { MetaDataKeys } from './Metadata';
+import { RequestHandler, Request, Response, NextFunction } from 'express';
+
+function bodyValidators(keys: string[]): RequestHandler {
+  return function (req: Request, res: Response, next: NextFunction) {
+    if (!req.body) {
+      res.status(422).json({ message: 'Provide all required inputs' });
+      return;
+    }
+    for (const key of keys) {
+      if (!req.body[key]) {
+        res.status(422).json({ message: 'Provide all required inputs' });
+        return;
+      }
+    }
+    next();
+  };
+}
 
 export function controller(prefix: string) {
   return function (target: Function) {
@@ -24,8 +41,18 @@ export function controller(prefix: string) {
         Reflect.getMetadata(MetaDataKeys.Middleware, target.prototype, key) ||
         [];
 
+      const requiredProps =
+        Reflect.getMetadata(MetaDataKeys.Validator, target.prototype, key) ||
+        [];
+      const validator = bodyValidators(requiredProps);
+
       if (path) {
-        router[method](`${prefix}${path}`, ...middlewares, routeHandler);
+        router[method](
+          `${prefix}${path}`,
+          ...middlewares,
+          validator,
+          routeHandler
+        );
       }
     }
   };
