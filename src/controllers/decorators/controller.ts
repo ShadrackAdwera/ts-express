@@ -7,12 +7,12 @@ import { RequestHandler, Request, Response, NextFunction } from 'express';
 function bodyValidators(keys: string[]): RequestHandler {
   return function (req: Request, res: Response, next: NextFunction) {
     if (!req.body) {
-      res.status(422).json({ message: 'Provide all required inputs' });
+      res.status(422).send(`Provide all required inputs`);
       return;
     }
     for (const key of keys) {
       if (!req.body[key]) {
-        res.status(422).json({ message: 'Provide all required inputs' });
+        res.status(422).send(`Provide the ${key}`);
         return;
       }
     }
