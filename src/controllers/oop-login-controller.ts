@@ -43,4 +43,10 @@ class LoginController {
       res.send('Auth failed!');
     }
   }
+
+  @get('/logout')
+  getLogout(req: Request, res: Response, next: NextFunction) {
+    req.session = undefined;
+    res.redirect('/');
+  }
 }
